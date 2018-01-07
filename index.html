@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Motosportowe wydarzenia w Polsce</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+
+
+    
+    <div id="app"></div>
+    
+    <script>
+        var firebase = require("firebase/app");
+        require("firebase/database");
+
+        var config = {
+            apiKey: "AIzaSyCYPl78HDniACeZdF1N3DYGXsh1SupAz0M",
+            authDomain: "motosporteventspl.firebaseapp.com",
+            databaseURL: "https://motosporteventspl.firebaseio.com",
+            projectId: "motosporteventspl",
+            storageBucket: "",
+            messagingSenderId: "116718912115"
+        };
+        firebase.initializeApp(config);
+      </script>
+
+    <script defer src="./js/app.js"></script>
+</body>
+
+</html>
