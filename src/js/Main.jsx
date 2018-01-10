@@ -35,13 +35,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		render() {			
 
 			let tab = this.state.allEvents;
-			console.log(this.state.allEvents);
 			let toDisplay = [];
 			for (var i = 0; i <= tab.length-1; i++) {
-				console.log(tab[i]);
-				for (var j = 3; j <= tab[i].length-1; j++) {
-					toDisplay.push(tab[i][j]);
-					toDisplay.push("---");
+				for (var j = 0; j <= tab[i].length-1; j++) {
+					for (var k = 0; k <= tab[i][j].length-1; k++) {
+						toDisplay.push(tab[i][j][k]);
+						toDisplay.push(" / ");
+					}
 				}
 			}
 
@@ -52,7 +52,9 @@ document.addEventListener('DOMContentLoaded', function () {
 					<h1>DZIAŁA COŚ</h1>
 					{/* <p>{this.state.allEvents[4]}</p> */}
 					{/* <p>................</p> */}
+					<p>111111</p>
 					<p>{toDisplay}</p>
+					<p>2222222</p>
 				</div>
 			)
 		}
