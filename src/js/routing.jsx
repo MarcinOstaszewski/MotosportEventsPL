@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Navigation} from './navigation.jsx';
 import {Main} from './Main.jsx';
 import {Events} from './events.jsx';
 import {NotFound} from './notFound.jsx';
-import {Navigation} from './navigation.jsx';
 
 import { Router,
     PropsRoute,
