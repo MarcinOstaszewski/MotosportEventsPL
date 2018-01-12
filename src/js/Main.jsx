@@ -1,60 +1,97 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+require('../sass/main.scss');
+
 // import Routing from '../js/routing.jsx';
 
 document.addEventListener('DOMContentLoaded', function () {
-	
-	require('../sass/main.scss');
-
 
 	class Fetch extends React.Component{
 		constructor(props){
 			super(props);
 			this.state={
-				allEvents: []
+				allEvents: [],
+				filterType: "wyścig",
+				filterLocation: "Gdańsk",
+				filterLicence: "n",
+				filterHomologation: "y",
+				filteredEvents: []
 			}
 		}
 
-
 		componentDidMount() {
 
-			this.datebase = [];
+			this.allEvents = [];
+
 			fetch(`https://motosporteventspl.firebaseio.com/masterSheet.json`).then( r => r.json() ).then( response => {
 
-				this.datebase.push(response);
+				this.allEvents.push(response);
 
 				this.setState({
-					allEvents: this.datebase
+					allEvents: this.allEvents,
 				})
+				
+				if (this.state.filterType !== "any") {
+					this.setState({
+						filteredEvents: response.filter( item => {
+							return item[2] == this.state.filterType;
+						})
+					}) 
+				}
+				console.log(this.state.filterType, this.state.filteredEvents);
+
+				if (this.state.filterLocation !== "any") {
+					const tempFilteredEvents = this.state.filteredEvents;
+					console.log(tempFilteredEvents);
+					this.setState({
+						filteredEvents: tempFilteredEvents.filter( item => {
+							return item[3] == this.state.filterLocation;
+						})
+					}) 
+				}
+				console.log(this.state.filterLocation, this.state.filteredEvents);
+
+				if (this.state.filterLicence !== "any") {
+					const tempFilteredEvents = this.state.filteredEvents;
+					this.setState({
+						filteredEvents: tempFilteredEvents.filter( item => {
+							return item[4] == this.state.filterLicence;
+						})
+					}) 
+				}
+				console.log(this.state.filterLicence, this.state.filteredEvents);
+
+				if (this.state.filterHomologation !== "any") {
+					const tempFilteredEvents = this.state.filteredEvents;
+					this.setState({
+						filteredEvents: tempFilteredEvents.filter( item => {
+							return item[5] == this.state.filterHomologation;
+						})
+					}) 
+				}
+			
 			});
 			
 		}
 
 
-		render() {			
-
-			let tab = this.state.allEvents;
-			let toDisplay = [];
-			for (var i = 0; i <= tab.length-1; i++) {
-				for (var j = 0; j <= tab[i].length-1; j++) {
-					for (var k = 0; k <= tab[i][j].length-1; k++) {
-						toDisplay.push(tab[i][j][k]);
-						toDisplay.push(" / ");
-					}
-				}
-			}
-
-
+		render() {
 			
+
 			return (
 				<div className="homepage">
 					<h1>DZIAŁA COŚ</h1>
 					{/* <p>{this.state.allEvents[4]}</p> */}
-					{/* <p>................</p> */}
+					<p></p>
 					<p>111111</p>
-					<p>{toDisplay}</p>
-					<p>2222222</p>
+					<p> aaa</p>
+					<p>{this.state.allEvents}</p>
+					<p> bbb</p>
+					{/* <p>...{toDisplay}...</p> */}
+					<p> ccc</p>
+					<p>{this.state.filteredEvents}</p>
+
 				</div>
 			)
 		}
