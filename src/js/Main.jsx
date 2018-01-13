@@ -12,38 +12,46 @@ document.addEventListener('DOMContentLoaded', function () {
 			super(props);
 			this.state={
 				allEvents: [],
-				filterType: "wyścig",
-				filterLocation: "Gdańsk",
-				filterLicence: "n",
-				filterHomologation: "y",
+				filterType: "rajd",
+				filterLocation: "wszystkie",
+				filterLicence: "wszystkie",
+				filterHomologation: "wszystkie",
 				filteredEvents: []
 			}
+		}
+
+		handleTypeChange = (event) => {
+			this.setState({
+				filterType: event.target.value,
+			})
 		}
 
 		componentDidMount() {
 
 			this.allEvents = [];
+			this.allEventsPush = [];
 
 			fetch(`https://motosporteventspl.firebaseio.com/masterSheet.json`).then( r => r.json() ).then( response => {
 
-				this.allEvents.push(response);
-
+				this.allEvents = response;
+				this.allEventsPush.push(response);
 				this.setState({
 					allEvents: this.allEvents,
 				})
+				console.log(this.state.allEvents);
 				
-				if (this.state.filterType !== "any") {
+				if (this.state.filterType !== "wszystkie") {
+					// console.log(this.state.filterType, this.allEvents);
 					this.setState({
-						filteredEvents: response.filter( item => {
+						filteredEvents: this.allEvents.filter( item => {
 							return item[2] == this.state.filterType;
 						})
 					}) 
 				}
 				console.log(this.state.filterType, this.state.filteredEvents);
 
-				if (this.state.filterLocation !== "any") {
+				if (this.state.filterLocation !== "wszystkie") {
 					const tempFilteredEvents = this.state.filteredEvents;
-					console.log(tempFilteredEvents);
 					this.setState({
 						filteredEvents: tempFilteredEvents.filter( item => {
 							return item[3] == this.state.filterLocation;
@@ -52,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				}
 				console.log(this.state.filterLocation, this.state.filteredEvents);
 
-				if (this.state.filterLicence !== "any") {
+				if (this.state.filterLicence !== "wszystkie") {
 					const tempFilteredEvents = this.state.filteredEvents;
 					this.setState({
 						filteredEvents: tempFilteredEvents.filter( item => {
@@ -62,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				}
 				console.log(this.state.filterLicence, this.state.filteredEvents);
 
-				if (this.state.filterHomologation !== "any") {
+				if (this.state.filterHomologation !== "wszystkie") {
 					const tempFilteredEvents = this.state.filteredEvents;
 					this.setState({
 						filteredEvents: tempFilteredEvents.filter( item => {
@@ -77,19 +85,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 		render() {
-			
-
 			return (
 				<div className="homepage">
-					<h1>DZIAŁA COŚ</h1>
-					{/* <p>{this.state.allEvents[4]}</p> */}
-					<p></p>
-					<p>111111</p>
-					<p> aaa</p>
-					<p>{this.state.allEvents}</p>
-					<p> bbb</p>
-					{/* <p>...{toDisplay}...</p> */}
-					<p> ccc</p>
+					<h1>WYBIERZ INTERESUJĄCE CIĘ WYDARZENIE SAMOCHODOWE</h1>
+					<p> - - - - - - - - - </p>
+					<select
+						className="select"
+						onChange={this.handleTypeChange}
+						value={this.state.filterType}>
+						<option value="wszystkie">wszystkie</option>
+						<option value="rajd">rajd</option>
+						<option value="wyścig">wyścig</option>
+						<option value="drift">drift</option>
+						<option value="trening">trening</option>
+					</select>
+
+					<p>- - - - - - - - - - - -</p>
 					<p>{this.state.filteredEvents}</p>
 
 				</div>
