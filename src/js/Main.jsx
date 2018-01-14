@@ -11,80 +11,55 @@ document.addEventListener('DOMContentLoaded', function () {
 		constructor(props){
 			super(props);
 			this.state={
-				allEvents: [],
-				filterType: "rajd",
+				filterType: "wszystkie",
 				filterLocation: "wszystkie",
 				filterLicence: "wszystkie",
 				filterHomologation: "wszystkie",
-				filteredEvents: []
+				filteredEvents: [],
+				eventsListToDisplay: []
 			}
-		}
-
+			// this.handleTypeChange = this.handleTypeChange.bind(this);  // ?necessary?
+			// this.createEventsList = this.createEventsList.bind(this);  // ?necessary?
+		}		
 		handleTypeChange = (event) => {
-			this.setState({
-				filterType: event.target.value,
-			})
+			this.setState({ filterType: event.target.value });
 		}
 
 		componentDidMount() {
 
-			this.allEvents = [];
-			this.allEventsPush = [];
-
 			fetch(`https://motosporteventspl.firebaseio.com/masterSheet.json`).then( r => r.json() ).then( response => {
-
-				this.allEvents = response;
-				this.allEventsPush.push(response);
-				this.setState({
-					allEvents: this.allEvents,
-				})
-				console.log(this.state.allEvents);
 				
-				if (this.state.filterType !== "wszystkie") {
-					// console.log(this.state.filterType, this.allEvents);
-					this.setState({
-						filteredEvents: this.allEvents.filter( item => {
-							return item[2] == this.state.filterType;
-						})
-					}) 
+				// create a list of events from fetch response
+				let listOfFilteredEvents = [];
+				for (var i = 1; i < response.length; i++) {
+					let eventRecord = "<li key='"+i+"'>";
+					for (var j = 0; j < response[i].length; j++) {
+						eventRecord += response[i][j] + " - \t";
+					}
+					eventRecord += "</li>";
+					listOfFilteredEvents.push(eventRecord);
 				}
-				console.log(this.state.filterType, this.state.filteredEvents);
-
-				if (this.state.filterLocation !== "wszystkie") {
-					const tempFilteredEvents = this.state.filteredEvents;
-					this.setState({
-						filteredEvents: tempFilteredEvents.filter( item => {
-							return item[3] == this.state.filterLocation;
-						})
-					}) 
-				}
-				console.log(this.state.filterLocation, this.state.filteredEvents);
-
-				if (this.state.filterLicence !== "wszystkie") {
-					const tempFilteredEvents = this.state.filteredEvents;
-					this.setState({
-						filteredEvents: tempFilteredEvents.filter( item => {
-							return item[4] == this.state.filterLicence;
-						})
-					}) 
-				}
-				console.log(this.state.filterLicence, this.state.filteredEvents);
-
-				if (this.state.filterHomologation !== "wszystkie") {
-					const tempFilteredEvents = this.state.filteredEvents;
-					this.setState({
-						filteredEvents: tempFilteredEvents.filter( item => {
-							return item[5] == this.state.filterHomologation;
-						})
-					}) 
-				}
-			
-			});
-			
+				console.log(listOfFilteredEvents);
+				console.log("--------------");
+ 
+				const listOfEvents  = response.map( (item, index) => {
+					let eventRecord = "";
+					for (var j = 0; j < item.length; j++) {
+						eventRecord += item[j] + " - \t";
+					}
+					return <li key={index}> {eventRecord}</li>;
+				})
+				console.log(listOfEvents);
+				
+				this.setState({
+					filteredEvents: listOfEvents
+				})
+				
+			});	
 		}
 
-
 		render() {
+
 			return (
 				<div className="homepage">
 					<h1>WYBIERZ INTERESUJĄCE CIĘ WYDARZENIE SAMOCHODOWE</h1>
@@ -99,9 +74,10 @@ document.addEventListener('DOMContentLoaded', function () {
 						<option value="drift">drift</option>
 						<option value="trening">trening</option>
 					</select>
-
 					<p>- - - - - - - - - - - -</p>
-					<p>{this.state.filteredEvents}</p>
+					<p>{ this.state.filteredEvents}</p>
+					<p>- - - - - - - - - - - -</p>
+					<ul>{ this.state.eventsListToDisplay }</ul>
 
 				</div>
 			)
