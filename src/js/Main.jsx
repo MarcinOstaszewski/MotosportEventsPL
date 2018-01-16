@@ -11,73 +11,106 @@ document.addEventListener('DOMContentLoaded', function () {
 		constructor(props){
 			super(props);
 			this.state={
-				filterType: "wszystkie",
-				filterLocation: "wszystkie",
+				filterType: "rajd,wyścig,drift,trening",
+				filterLocation: "Warszawa,Gdańsk,Kłodzk,Poznań,Słone,Piła,Toruń,Sczurów",
 				filterLicence: "wszystkie",
 				filterHomologation: "wszystkie",
+				allEvents: [],
 				filteredEvents: [],
 				eventsListToDisplay: []
 			}
-			// this.handleTypeChange = this.handleTypeChange.bind(this);  // ?necessary?
-			// this.createEventsList = this.createEventsList.bind(this);  // ?necessary?
+		
 		}		
 		handleTypeChange = (event) => {
 			this.setState({ filterType: event.target.value });
 		}
+		handleLocationChange = (event) => {
+			this.setState({ filterLocation: event.target.value });
+		}
+
 
 		componentDidMount() {
 
+			// gets events data from FireBase datebase and filtrates them
 			fetch(`https://motosporteventspl.firebaseio.com/masterSheet.json`).then( r => r.json() ).then( response => {
 				
-				// create a list of events from fetch response
-				let listOfFilteredEvents = [];
-				for (var i = 1; i < response.length; i++) {
-					let eventRecord = "<li key='"+i+"'>";
-					for (var j = 0; j < response[i].length; j++) {
-						eventRecord += response[i][j] + " - \t";
-					}
-					eventRecord += "</li>";
-					listOfFilteredEvents.push(eventRecord);
-				}
-				console.log(listOfFilteredEvents);
-				console.log("--------------");
- 
-				const listOfEvents  = response.map( (item, index) => {
-					let eventRecord = "";
-					for (var j = 0; j < item.length; j++) {
-						eventRecord += item[j] + " - \t";
-					}
-					return <li key={index}> {eventRecord}</li>;
-				})
-				console.log(listOfEvents);
-				
+			// creates a list of events from fetch response
+				let eventsFromResponse = response;
 				this.setState({
-					filteredEvents: listOfEvents
+					allEvents: response
 				})
-				
-			});	
+			});
+					
 		}
 
+
 		render() {
+			let listOfFilteredEvents = this.state.allEvents.filter( item => {
+				if (this.state.filterType.includes(item[2])) {
+					return item;
+				}
+			}).filter(item => {
+				if (this.state.filterLocation.includes(item[3])) {
+					return item;
+				}
+			});
+
+
+
+			listOfFilteredEvents = listOfFilteredEvents.map( item => {
+					return <tr key={item[0]}><td>{item[0]}</td><td><strong>{item[1]}</strong></td><td><em>{item[2]}</em></td><td><strong>{item[3]}</strong></td><td>{item[4]}</td><td>{item[5]}</td></tr>;
+			})
 
 			return (
 				<div className="homepage">
-					<h1>WYBIERZ INTERESUJĄCE CIĘ WYDARZENIE SAMOCHODOWE</h1>
-					<p> - - - - - - - - - </p>
-					<select
-						className="select"
-						onChange={this.handleTypeChange}
-						value={this.state.filterType}>
-						<option value="wszystkie">wszystkie</option>
-						<option value="rajd">rajd</option>
-						<option value="wyścig">wyścig</option>
-						<option value="drift">drift</option>
-						<option value="trening">trening</option>
-					</select>
-					<p>- - - - - - - - - - - -</p>
-					<p>{ this.state.filteredEvents}</p>
-					<p>- - - - - - - - - - - -</p>
-					<ul>{ this.state.eventsListToDisplay }</ul>
+					<h1>PRZEGLĄDARKA WYDARZEŃ MOTOSPORTOWYCH - test</h1>
+					<p>kryteria selekcji wydarzeń:</p> 
+					<label className="selectLabel">typ: 
+						<select
+							className="select"
+							onChange={this.handleTypeChange}
+							value={this.state.filterType}>
+							<option value="rajd,wyścig,drift,trening">wszystkie</option>
+							<option value="rajd">rajd</option>
+							<option value="wyścig">wyścig</option>
+							<option value="drift">drift</option>
+							<option value="trening">trening</option>
+						</select>
+					</label>
+					<label>Miejscowość:
+						<select
+							className="select"
+							onChange={this.handleLocationChange}
+							value={this.state.filterLocation}>
+							<option value="Warszawa,Gdańsk,Kłodzk,Poznań,Słone,Piła,Toruń,Sczurów">wszystkie</option>
+							<option value="Warszawa">Warszawa</option>
+							<option value="Gdańsk">Gdańsk</option>
+							<option value="Kłodzk">Kłodzk</option>
+							<option value="Poznań">Poznań</option>
+							<option value="Słone">Słone</option>
+							<option value="Piła">Piła</option>
+							<option value="Toruń">Toruń</option>
+							<option value="Szczurów">Szczurów</option>
+						</select>
+					</label>
+
+					{/* <p>{ this.state.allEvents }</p> */}
+					<p className="tableTitle">Wydarzenia spełniające kryteria:</p>
+					<table className="eventTable">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th><strong>Nazwa</strong></th>
+								<th><em>typ</em></th>
+								<th><strong>Miejscowość</strong></th>
+								<th>z licencją?</th>
+								<th>z homologacją?</th>
+							</tr>
+						</thead>
+						<tbody >
+							{listOfFilteredEvents}
+						</tbody>
+					</table>
 
 				</div>
 			)

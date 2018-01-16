@@ -4,10 +4,49 @@
 
 body {
     font-family: sans-serif;
+    font-size: 12px;
+    
 }
 .homepage  {
-    margin: 20px;
+    margin: 20px 50px;
+    .selectLabel {
+        margin: 5px 10px 5px 0;
+    }
+    .tableTitle {
+        font-size: 18px;
+        color: rgb(10, 50, 110);
+        padding: 10px 0px;
+    }
 }
 h1 {
-    font-size: 50px;
+    font-size: 20px;
+}
+.select {
+    font-size: 15px;
+    padding: 5px 0px;
+    margin: 5px 0px;
+    
+}
+
+
+.eventTable {
+    border: 3px solid rgb(10, 50, 110);
+    thead, tbody {
+        tr {
+            border-bottom: 2px solid rgb(11, 112, 179);
+            td {
+                padding: 8px 5px;
+                border: 1px solid rgb(16, 112, 177);
+                text-align: center;
+            }
+            th {
+                padding: 10px;
+                color: #fff;
+                border: 1px solid rgb(94, 160, 204);
+            }
+        }
+    }
+    thead {
+        background-color: rgb(60, 118, 156);
+    }
 }
