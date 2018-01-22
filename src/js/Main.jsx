@@ -85,9 +85,38 @@ document.addEventListener('DOMContentLoaded', function () {
 		handleTypeChange = (event) => {
 			this.setState({ filterType: event.target.value });
 		}
-
 		handleCitiesChange = (event) => {
 			this.setState({ filterCity: event.target.value });
+		}
+		handleLicenceChange = (event) => {
+			this.setState({ filterLicence: event.target.value });
+		}
+		handleHomologationChange = (event) => {
+			this.setState({ filterHomologation: event.target.value });
+		}
+		
+		eventsToKeyNames = (pushedEvents, fieldNumber) => {
+			// function returns the effect of a REDUCE function  ;)
+			return (
+				pushedEvents.reduce( (keys, item) => {
+					item = item[fieldNumber];
+					if (!keys[item]) {
+						keys[item] = 0;
+					}
+					keys[item]++;
+					return keys;
+				}, {})
+			);
+		}
+
+		getAllFieldValues = (eventTypes) => {
+			let allValues = "";  
+			// let firstTypeSelectOption = 
+			eventTypes.map( item => {
+				allValues += item + ",";
+				return allValues;
+			});
+			return allValues;
 		}
 
 
@@ -99,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				// gets the number of <select> fields to be created - from the first line
 				this.setState({
 					howManySelectFields: response[0][1]
-				})
+				}) //// TO BE USED IN FUTURE ;)
 				
 				// gets the second line to be used as a descriptions on the page
 				this.setState({
@@ -107,53 +136,29 @@ document.addEventListener('DOMContentLoaded', function () {
 				})
 				
 				// creates a list of events from fetch response - from third line to the end
-				var pushedEvents = [];
+				let pushedEvents = [];
 				for (var i=2; i<=response.length-2; i++) {
 					pushedEvents.push(response[i]);
 				}
 
 				// creates an OBJECT=>ARRAY of eventTYPES from every records THIRD field
-				var eventTypes = pushedEvents.reduce( (types, item) => {
-					item = item[2];
-					if (!types[item]) {
-						types[item] = 0
-					}
-					types[item]++;
-					return types;
-				}, {});
-				eventTypes = Object.keys(eventTypes);
-
+				// *****  Object.keys() creates an array from object keys only
+				let eventTypes = Object.keys(this.eventsToKeyNames(pushedEvents, 2));
 				// creates a string with all possible TYPES for the first option in <select> 
-				let allTypes = "";  
-				let firstTypeSelectOption = eventTypes.map( item => {
-					allTypes += item + ",";
-					return allTypes;
-				});	
-				console.log(allTypes);
-
+				let allTypes = this.getAllFieldValues(eventTypes);
 
 				// creates an OBJECT=>ARRAY of eventCITIES from every records FOURTH field
-				var allEventCities = pushedEvents.reduce( (cities, item) => {
-					item = item[3];
-					if (!cities[item]) {
-						cities[item] = 0
-					}
-					cities[item]++;
-					return cities;
-				}, {});
-				allEventCities = Object.keys(allEventCities);
-				
+				let allEventCities = Object.keys(this.eventsToKeyNames(pushedEvents, 3));			
 				// creates a string with all possible CITIES for the first option in <select> 
-				let allCities = "";  
-				let firstCitySelectOption = allEventCities.map( item => {
-					allCities += item + ",";
-					return allCities;
-				});	
-				console.log(allCities);
+				let allCities = this.getAllFieldValues(allEventCities);
+				
+				let eventLicence = Object.keys(this.eventsToKeyNames(pushedEvents, 4));
+				let allLicenceTypes = this.getAllFieldValues(eventLicence);
+
+				let eventHomologation = Object.keys(this.eventsToKeyNames(pushedEvents, 5));
+				let allHomologationTypes = this.getAllFieldValues(eventHomologation);
 
 				
-				// Object.keys creates an array from object keys only
-				// eventTypes: eventTypes,
 				this.setState({
 					allEvents: pushedEvents,
 					allEventTypes: allTypes,
