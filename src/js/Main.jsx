@@ -11,54 +11,15 @@ document.addEventListener('DOMContentLoaded', function () {
 	// 	constructor(props){
 	// 		super(props);
 	// 		this.state={
-	// 			filterType: this.props.filterType,
-	// 			eventTypesArray: this.props.eventTypesArray
 	// 		}			
 	// 	}	
-
 	// 	handleTypeChange = (event) => {
 	// 		this.setState({ filterType: event.target.value });
 	// 	}
-
 	// 	render() {
-
-	// 		// creates a string with all possible type values for the first <select> option
-	// 		let allValues = "";  
-	// 		let firstSelectOption = this.state.eventTypesArray.map( item => {
-	// 			allValues += item + ",";
-	// 			return allValues;
-	// 		});	
-
-	// 		// creates list of all options for the <select> field
-	// 		let allSelectTypeOptions = this.state.eventTypesArray.map( function(item,index) {
-	// 			return <option value={  item  } key={  index+1  }>{  item  }</option>;
-	// 		});
-
-	// 		// creates the full <select> field
-	// 		let selectField = (<select
-	// 			className="select"
-	// 			onChange={this.handleTypeChange}
-	// 			value={this.state.filterType}>
-	// 			<option value={ allValues } key="0">wszystkie</option>;
-	// 			{allSelectTypeOptions}
-	// 			</select>
-	// 		);
-
 	// 		return (
 	// 			<div className="selectWithLabel">
-	// 				<p>TYPY EVENTÓW : {this.state.eventTypesArray}</p>
-	// 				<label className="selectLabel">{this.props.description[2]}
-	// 					<select
-	// 						className="select"
-	// 						onChange={this.handleTypeChange}
-	// 						value={this.state.filterType}>
-	// 						<option value="rajd,wyścig,drift,trening">wszystkie</option>
-	// 						<option value="rajd">rajd</option>
-	// 						<option value="wyścig">wyścig</option>
-	// 						<option value="drift">drift</option>
-	// 						<option value="trening">trening</option>
-	// 					</select>
-	// 				</label>
+	// 				 
 	// 			</div>
 	// 		)
 	// 	}
@@ -68,20 +29,31 @@ document.addEventListener('DOMContentLoaded', function () {
 		constructor(props){
 			super(props);
 			this.state={
+				allEvents: [],
+				allEventTypes: "",
+				allEventTypesArray: [],
+				allEventCities: "",
+				allEventCitiesArray: [],
+				allLicenceTypes: "",
+				allLicenceTypesArray: [],
+				allHomologationTypes: "",
+				allHomologationTypesArray: [],
 				filterType: "",
 				filterCity: "",
 				filterLicence: "",
 				filterHomologation: "",
-				allEvents: [],
+				filterVoivodship: "",
 				filteredEvents: [],
-				eventsListToDisplay: [],
 				description: [],
-				howManySelectFields: 0,
-				eventTypesArray: [],
-				eventCitiesArray: []
+				howManySelectFields: 0
 			}
 		}		
-		
+		handleChange = (event) => {
+			this.setState({
+				[event.target.name]: event.target.value
+			})
+		}
+
 		handleTypeChange = (event) => {
 			this.setState({ filterType: event.target.value });
 		}
@@ -95,8 +67,9 @@ document.addEventListener('DOMContentLoaded', function () {
 			this.setState({ filterHomologation: event.target.value });
 		}
 		
+		// creates OBJECTs of eventTYPES from corresponding records fields
 		eventsToKeyNames = (pushedEvents, fieldNumber) => {
-			// function returns the effect of a REDUCE function  ;)
+			// returns the effect of a REDUCE function  ;)
 			return (
 				pushedEvents.reduce( (keys, item) => {
 					item = item[fieldNumber];
@@ -109,15 +82,36 @@ document.addEventListener('DOMContentLoaded', function () {
 			);
 		}
 
-		getAllFieldValues = (eventTypes) => {
+		getAllFieldValues = (allEventTypes) => {
 			let allValues = "";  
-			// let firstTypeSelectOption = 
-			eventTypes.map( item => {
+			allEventTypes.map( item => {
 				allValues += item + ",";
 				return allValues;
 			});
 			return allValues;
 		}
+
+		createSelectField = ( allOptions, filterName, thisStateFilterName, thisStateAllValues ) => {
+			let optionsString = <option value={  thisStateAllValues  } key='0'>wszystkie</option>;
+			let allOptionsMapped = allOptions.map( (item, index) => {
+				return <option value={  item  } key={  index+1  }>{  item  }</option>;
+			});
+			let selectString = (
+				<select 
+					className='select' 
+					name={  filterName  } 
+					onChange={  this.handleChange  } 
+					value={ thisStateFilterName  }> 
+					{  optionsString  }
+					{  allOptionsMapped  }
+				</select>);
+			return (
+				<div>
+					{  selectString  }
+				</div>
+			);
+		}
+
 
 
 		componentDidMount() {
@@ -141,32 +135,26 @@ document.addEventListener('DOMContentLoaded', function () {
 					pushedEvents.push(response[i]);
 				}
 
-				// creates an OBJECT=>ARRAY of eventTYPES from every records THIRD field
-				// *****  Object.keys() creates an array from object keys only
-				let eventTypes = Object.keys(this.eventsToKeyNames(pushedEvents, 2));
-				// creates a string with all possible TYPES for the first option in <select> 
-				let allTypes = this.getAllFieldValues(eventTypes);
-
-				// creates an OBJECT=>ARRAY of eventCITIES from every records FOURTH field
+				// *****  Object.keys() creates an array from only object keys
+				let allEventTypes = Object.keys(this.eventsToKeyNames(pushedEvents, 2));
 				let allEventCities = Object.keys(this.eventsToKeyNames(pushedEvents, 3));			
-				// creates a string with all possible CITIES for the first option in <select> 
-				let allCities = this.getAllFieldValues(allEventCities);
-				
-				let eventLicence = Object.keys(this.eventsToKeyNames(pushedEvents, 4));
-				let allLicenceTypes = this.getAllFieldValues(eventLicence);
-
-				let eventHomologation = Object.keys(this.eventsToKeyNames(pushedEvents, 5));
-				let allHomologationTypes = this.getAllFieldValues(eventHomologation);
-
+				let allEventLicence = Object.keys(this.eventsToKeyNames(pushedEvents, 4));
+				let allEeventHomologation = Object.keys(this.eventsToKeyNames(pushedEvents, 5));
 				
 				this.setState({
 					allEvents: pushedEvents,
-					allEventTypes: allTypes,
-					allEventCities: allCities,
-					eventTypesArray: eventTypes,
-					filterType: allTypes,
-					eventCitiesArray: allEventCities,
-					filterCity: allCities
+					filterType: this.getAllFieldValues(allEventTypes),
+					allEventTypes: this.getAllFieldValues(allEventTypes),
+					allEventTypesArray: allEventTypes,
+					filterCity: this.getAllFieldValues(allEventCities),
+					allEventCities: this.getAllFieldValues(allEventCities),
+					allEventCitiesArray: allEventCities,
+					filterLicence: this.getAllFieldValues(allEventLicence),					
+					allLicenceTypes: this.getAllFieldValues(allEventLicence),
+					allLicenceTypesArray: allEventLicence,
+					filterHomologation: this.getAllFieldValues(allEeventHomologation),
+					allHomologationTypes: this.getAllFieldValues(allEeventHomologation),
+					allHomologationTypesArray: allEeventHomologation
 				})
 			});   // ***********   END FETCH   *************
 		}
@@ -178,68 +166,78 @@ document.addEventListener('DOMContentLoaded', function () {
 			// filters all events to meet the options chosen with Select fields
 			let listOfFilteredEvents = this.state.allEvents.filter( item => {
 				// checkes if an event's type field consists the filter value
-				if (this.state.filterType.includes(item[2])) {
+				if (this.state.filterType.includes( item[2] )) {
 					return item;
 				}
-			}).filter(item => {
+			}).filter( item => {
 				if (this.state.filterCity.includes( item[3] )) {
+					return item;
+				}
+			}).filter( item => {
+				if (this.state.filterLicence.includes (item[4] )) {
+					return item;
+				}
+			}).filter ( item => {
+				if (this.state.filterHomologation.includes ( item[5] )) {
 					return item;
 				}
 			});
 
 
-
-			// CREATES TABLE WITH EVENTS
-			// maps filtered events into a table row
-			listOfFilteredEvents = listOfFilteredEvents.map( item => {
-					return (
-						<tr key={  item[0]  }>
-							<td>{  item[0]  }</td>
-							<td><strong>{  item[1]  }</strong></td>
-							<td><em>{  item[2]  }</em></td>
-							<td><strong>{  item[3]  }</strong></td>
-							<td>{  item[4]  }</td>
-							<td>{  item[5]  }</td>
-						</tr>
-					);
-			})
-			
-
 			// ***********  CREATES TYPE SELECT FIELD ***********
 			// creates a list of all options for the <select> field
-			let allSelectTypeOptions = this.state.eventTypesArray.map( function(item,index) {
+			let allSelectTypeOptions = this.state.allEventTypesArray.map( (item, index) => {
 				return <option value={  item  } key={  index+1  }>{  item  }</option>;
 			});
 
 			// creates the full TYPES <select> field
-			let selectTypeField = (<select
+			let selectTypeField = (
+				<select
 					className="select"
-					onChange={  this.handleTypeChange  }
+					name = "filterType"
+					onChange={  this.handleChange  }
 					value={  this.state.filterType  }>
-					<option value={ this.state.allEventTypes } key="0">wszystkie</option>;
+					<option value={ this.state.allEventTypes } key="0">wszystkie</option>
 					{  allSelectTypeOptions  }
-					</select>
+				</select>
 			);
 			// ***********  END TYPE SELECT FIELD *********** 
-			
+
+		
 
 			// *****  CREATES CITY SELECT FIELD *****
 			// creates a list of all options for the <select> field
-			let allSelectCitiesOptions = this.state.eventCitiesArray.map( function(item,index) {
+			let allSelectCitiesOptions = this.state.allEventCitiesArray.map( function(item,index) {
 				return <option value={  item  } key={  index + 1  }>{  item  }</option>;
 			});
 
 			// creates the full CITIES <select> field
 			let selectCityField = (<select
 					className="select"
-					onChange={  this.handleCitiesChange  }
+					name = "filterCity"
+					onChange={  this.handleChange  }
 					value={  this.state.filterCity  }>
-					<option value={ this.state.allEventCities } key="0">wszystkie</option>;
+					<option value={ this.state.allEventCities } key="0">wszystkie</option>
 					{  allSelectCitiesOptions  }
 					</select>
 			);
 			// *****  END CITY SELECT FIELD ***** 
 
+			// CREATES TABLE WITH EVENTS
+			// maps filtered events into a table row
+			listOfFilteredEvents = listOfFilteredEvents.map( item => {
+				return (
+					<tr key={  item[0]  }>
+						<td>{  item[0]  }</td>
+						<td><strong>{  item[1]  }</strong></td>
+						<td><em>{  item[2]  }</em></td>
+						<td><strong>{  item[3]  }</strong></td>
+						<td>{  item[4]  }</td>
+						<td>{  item[5]  }</td>
+					</tr>
+				);
+			})
+		
 
 			return (
 				<div className="homepage">
@@ -247,38 +245,51 @@ document.addEventListener('DOMContentLoaded', function () {
 					<p>kryteria selekcji wydarzeń:</p> 
 
 					
-					<div className="selectContainer">
+					{/* <div className="selectContainer">
 						<p className="selectLabel">{  this.state.description[2]  }</p>
 						{  selectTypeField  }
+					</div> */}
+
+					{/* TU DODAJĘ SELECT Z TYPAMI */}
+					<div className="selectContainer">
+						<p className="selectLabel">{  this.state.description[2]  }</p>
+						{this.createSelectField( 
+							this.state.allEventTypesArray, 
+							"filterType", 
+							this.state.filterType, 
+							this.state.allEventTypes)
+						}
 					</div>
 
 					<div className="selectContainer">
 						<p className="selectLabel">{  this.state.description[3]  }</p>
-						{  selectCityField  }
+						{this.createSelectField( 
+							this.state.allEventCitiesArray, 
+							"filterCity", 
+							this.state.filterCity, 
+							this.state.allEventCities)
+						}
 					</div>
 
+					<div className="selectContainer">
+						<p className="selectLabel">{  this.state.description[4]  }</p>
+						{this.createSelectField( 
+							this.state.allLicenceTypesArray, 
+							"filterLicence", 
+							this.state.filterLicence, 
+							this.state.allLicenceTypes)
+						}
+					</div>
 
-					{/* <div className="selectContainer">
-						<p className="selectLabel">{this.state.description[3]}</p>
-						<select
-							className="select"
-							onChange={this.handleCitiesChange}
-							value={this.state.filterCity}>
-							<option value="Warszawa,Gdańsk,Kłodzk,Poznań,Słone,Piła,Toruń,Sczurów,Noc">wszystkie</option>
-							<option value="Warszawa">Warszawa</option>
-							<option value="Gdańsk">Gdańsk</option>
-							<option value="Kłodzk">Kłodzk</option>
-							<option value="Poznań">Poznań</option>
-							<option value="Słone">Słone</option>
-							<option value="Piła">Piła</option>
-							<option value="Toruń">Toruń</option>
-							<option value="Szczurów">Szczurów</option>
-						</select>
-					</div> */}
-					
-			
-
-
+					<div className="selectContainer">
+						<p className="selectLabel">{  this.state.description[5]  }</p>
+						{this.createSelectField( 
+							this.state.allHomologationTypesArray, 
+							"filterHomologation", 
+							this.state.filterHomologation, 
+							this.state.allHomologationTypes)  
+						}
+					</div>
 
 					<p className="tableTitle">Wydarzenia spełniające kryteria:</p>
 					<table className="eventTable">
