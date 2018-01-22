@@ -9602,6 +9602,8 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -9618,54 +9620,15 @@ document.addEventListener('DOMContentLoaded', function () {
 	// 	constructor(props){
 	// 		super(props);
 	// 		this.state={
-	// 			filterType: this.props.filterType,
-	// 			eventTypesArray: this.props.eventTypesArray
 	// 		}			
 	// 	}	
-
 	// 	handleTypeChange = (event) => {
 	// 		this.setState({ filterType: event.target.value });
 	// 	}
-
 	// 	render() {
-
-	// 		// creates a string with all possible type values for the first <select> option
-	// 		let allValues = "";  
-	// 		let firstSelectOption = this.state.eventTypesArray.map( item => {
-	// 			allValues += item + ",";
-	// 			return allValues;
-	// 		});	
-
-	// 		// creates list of all options for the <select> field
-	// 		let allSelectTypeOptions = this.state.eventTypesArray.map( function(item,index) {
-	// 			return <option value={  item  } key={  index+1  }>{  item  }</option>;
-	// 		});
-
-	// 		// creates the full <select> field
-	// 		let selectField = (<select
-	// 			className="select"
-	// 			onChange={this.handleTypeChange}
-	// 			value={this.state.filterType}>
-	// 			<option value={ allValues } key="0">wszystkie</option>;
-	// 			{allSelectTypeOptions}
-	// 			</select>
-	// 		);
-
 	// 		return (
 	// 			<div className="selectWithLabel">
-	// 				<p>TYPY EVENTÓW : {this.state.eventTypesArray}</p>
-	// 				<label className="selectLabel">{this.props.description[2]}
-	// 					<select
-	// 						className="select"
-	// 						onChange={this.handleTypeChange}
-	// 						value={this.state.filterType}>
-	// 						<option value="rajd,wyścig,drift,trening">wszystkie</option>
-	// 						<option value="rajd">rajd</option>
-	// 						<option value="wyścig">wyścig</option>
-	// 						<option value="drift">drift</option>
-	// 						<option value="trening">trening</option>
-	// 					</select>
-	// 				</label>
+	// 				 
 	// 			</div>
 	// 		)
 	// 	}
@@ -9679,6 +9642,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			var _this = _possibleConstructorReturn(this, (Fetch.__proto__ || Object.getPrototypeOf(Fetch)).call(this, props));
 
+			_this.handleChange = function (event) {
+				_this.setState(_defineProperty({}, event.target.name, event.target.value));
+			};
+
 			_this.handleTypeChange = function (event) {
 				_this.setState({ filterType: event.target.value });
 			};
@@ -9687,21 +9654,89 @@ document.addEventListener('DOMContentLoaded', function () {
 				_this.setState({ filterCity: event.target.value });
 			};
 
+			_this.handleLicenceChange = function (event) {
+				_this.setState({ filterLicence: event.target.value });
+			};
+
+			_this.handleHomologationChange = function (event) {
+				_this.setState({ filterHomologation: event.target.value });
+			};
+
+			_this.eventsToKeyNames = function (pushedEvents, fieldNumber) {
+				// returns the effect of a REDUCE function  ;)
+				return pushedEvents.reduce(function (keys, item) {
+					item = item[fieldNumber];
+					if (!keys[item]) {
+						keys[item] = 0;
+					}
+					keys[item]++;
+					return keys;
+				}, {});
+			};
+
+			_this.getAllFieldValues = function (allEventTypes) {
+				var allValues = "";
+				allEventTypes.map(function (item) {
+					allValues += item + ",";
+					return allValues;
+				});
+				return allValues;
+			};
+
+			_this.createSelectField = function (allOptions, filterName, thisStateFilterName, thisStateAllValues) {
+				var optionsString = _react2.default.createElement(
+					'option',
+					{ value: thisStateAllValues, key: '0' },
+					'wszystkie'
+				);
+				var allOptionsMapped = allOptions.map(function (item, index) {
+					return _react2.default.createElement(
+						'option',
+						{ value: item, key: index + 1 },
+						item
+					);
+				});
+				var selectString = _react2.default.createElement(
+					'select',
+					{
+						className: 'select',
+						name: filterName,
+						onChange: _this.handleChange,
+						value: thisStateFilterName },
+					optionsString,
+					allOptionsMapped
+				);
+				return _react2.default.createElement(
+					'div',
+					null,
+					selectString
+				);
+			};
+
 			_this.state = {
+				allEvents: [],
+				allEventTypes: "",
+				allEventTypesArray: [],
+				allEventCities: "",
+				allEventCitiesArray: [],
+				allLicenceTypes: "",
+				allLicenceTypesArray: [],
+				allHomologationTypes: "",
+				allHomologationTypesArray: [],
 				filterType: "",
 				filterCity: "",
 				filterLicence: "",
 				filterHomologation: "",
-				allEvents: [],
+				filterVoivodship: "",
 				filteredEvents: [],
-				eventsListToDisplay: [],
 				description: [],
-				howManySelectFields: 0,
-				eventTypesArray: [],
-				eventCitiesArray: []
+				howManySelectFields: 0
 			};
 			return _this;
 		}
+
+		// creates OBJECTs of eventTYPES from corresponding records fields
+
 
 		_createClass(Fetch, [{
 			key: 'componentDidMount',
@@ -9716,7 +9751,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					// gets the number of <select> fields to be created - from the first line
 					_this2.setState({
 						howManySelectFields: response[0][1]
-					});
+					}); //// TO BE USED IN FUTURE ;)
 
 					// gets the second line to be used as a descriptions on the page
 					_this2.setState({
@@ -9729,54 +9764,26 @@ document.addEventListener('DOMContentLoaded', function () {
 						pushedEvents.push(response[i]);
 					}
 
-					// creates an OBJECT=>ARRAY of eventTYPES from every records THIRD field
-					var eventTypes = pushedEvents.reduce(function (types, item) {
-						item = item[2];
-						if (!types[item]) {
-							types[item] = 0;
-						}
-						types[item]++;
-						return types;
-					}, {});
-					eventTypes = Object.keys(eventTypes);
+					// *****  Object.keys() creates an array from only object keys
+					var allEventTypes = Object.keys(_this2.eventsToKeyNames(pushedEvents, 2));
+					var allEventCities = Object.keys(_this2.eventsToKeyNames(pushedEvents, 3));
+					var allEventLicence = Object.keys(_this2.eventsToKeyNames(pushedEvents, 4));
+					var allEeventHomologation = Object.keys(_this2.eventsToKeyNames(pushedEvents, 5));
 
-					// creates a string with all possible TYPES for the first option in <select> 
-					var allTypes = "";
-					var firstTypeSelectOption = eventTypes.map(function (item) {
-						allTypes += item + ",";
-						return allTypes;
-					});
-					console.log(allTypes);
-
-					// creates an OBJECT=>ARRAY of eventCITIES from every records FOURTH field
-					var allEventCities = pushedEvents.reduce(function (cities, item) {
-						item = item[3];
-						if (!cities[item]) {
-							cities[item] = 0;
-						}
-						cities[item]++;
-						return cities;
-					}, {});
-					allEventCities = Object.keys(allEventCities);
-
-					// creates a string with all possible CITIES for the first option in <select> 
-					var allCities = "";
-					var firstCitySelectOption = allEventCities.map(function (item) {
-						allCities += item + ",";
-						return allCities;
-					});
-					console.log(allCities);
-
-					// Object.keys creates an array from object keys only
-					// eventTypes: eventTypes,
 					_this2.setState({
 						allEvents: pushedEvents,
-						allEventTypes: allTypes,
-						allEventCities: allCities,
-						eventTypesArray: eventTypes,
-						filterType: allTypes,
-						eventCitiesArray: allEventCities,
-						filterCity: allCities
+						filterType: _this2.getAllFieldValues(allEventTypes),
+						allEventTypes: _this2.getAllFieldValues(allEventTypes),
+						allEventTypesArray: allEventTypes,
+						filterCity: _this2.getAllFieldValues(allEventCities),
+						allEventCities: _this2.getAllFieldValues(allEventCities),
+						allEventCitiesArray: allEventCities,
+						filterLicence: _this2.getAllFieldValues(allEventLicence),
+						allLicenceTypes: _this2.getAllFieldValues(allEventLicence),
+						allLicenceTypesArray: allEventLicence,
+						filterHomologation: _this2.getAllFieldValues(allEeventHomologation),
+						allHomologationTypes: _this2.getAllFieldValues(allEeventHomologation),
+						allHomologationTypesArray: allEeventHomologation
 					});
 				}); // ***********   END FETCH   *************
 			}
@@ -9796,7 +9803,70 @@ document.addEventListener('DOMContentLoaded', function () {
 					if (_this3.state.filterCity.includes(item[3])) {
 						return item;
 					}
+				}).filter(function (item) {
+					if (_this3.state.filterLicence.includes(item[4])) {
+						return item;
+					}
+				}).filter(function (item) {
+					if (_this3.state.filterHomologation.includes(item[5])) {
+						return item;
+					}
 				});
+
+				// ***********  CREATES TYPE SELECT FIELD ***********
+				// creates a list of all options for the <select> field
+				var allSelectTypeOptions = this.state.allEventTypesArray.map(function (item, index) {
+					return _react2.default.createElement(
+						'option',
+						{ value: item, key: index + 1 },
+						item
+					);
+				});
+
+				// creates the full TYPES <select> field
+				var selectTypeField = _react2.default.createElement(
+					'select',
+					{
+						className: 'select',
+						name: 'filterType',
+						onChange: this.handleChange,
+						value: this.state.filterType },
+					_react2.default.createElement(
+						'option',
+						{ value: this.state.allEventTypes, key: '0' },
+						'wszystkie'
+					),
+					allSelectTypeOptions
+				);
+				// ***********  END TYPE SELECT FIELD *********** 
+
+
+				// *****  CREATES CITY SELECT FIELD *****
+				// creates a list of all options for the <select> field
+				var allSelectCitiesOptions = this.state.allEventCitiesArray.map(function (item, index) {
+					return _react2.default.createElement(
+						'option',
+						{ value: item, key: index + 1 },
+						item
+					);
+				});
+
+				// creates the full CITIES <select> field
+				var selectCityField = _react2.default.createElement(
+					'select',
+					{
+						className: 'select',
+						name: 'filterCity',
+						onChange: this.handleChange,
+						value: this.state.filterCity },
+					_react2.default.createElement(
+						'option',
+						{ value: this.state.allEventCities, key: '0' },
+						'wszystkie'
+					),
+					allSelectCitiesOptions
+				);
+				// *****  END CITY SELECT FIELD ***** 
 
 				// CREATES TABLE WITH EVENTS
 				// maps filtered events into a table row
@@ -9849,62 +9919,6 @@ document.addEventListener('DOMContentLoaded', function () {
 					);
 				});
 
-				// ***********  CREATES TYPE SELECT FIELD ***********
-				// creates a list of all options for the <select> field
-				var allSelectTypeOptions = this.state.eventTypesArray.map(function (item, index) {
-					return _react2.default.createElement(
-						'option',
-						{ value: item, key: index + 1 },
-						item
-					);
-				});
-
-				// creates the full TYPES <select> field
-				var selectTypeField = _react2.default.createElement(
-					'select',
-					{
-						className: 'select',
-						onChange: this.handleTypeChange,
-						value: this.state.filterType },
-					_react2.default.createElement(
-						'option',
-						{ value: this.state.allEventTypes, key: '0' },
-						'wszystkie'
-					),
-					';',
-					allSelectTypeOptions
-				);
-				// ***********  END TYPE SELECT FIELD *********** 
-
-
-				// *****  CREATES CITY SELECT FIELD *****
-				// creates a list of all options for the <select> field
-				var allSelectCitiesOptions = this.state.eventCitiesArray.map(function (item, index) {
-					return _react2.default.createElement(
-						'option',
-						{ value: item, key: index + 1 },
-						item
-					);
-				});
-
-				// creates the full CITIES <select> field
-				var selectCityField = _react2.default.createElement(
-					'select',
-					{
-						className: 'select',
-						onChange: this.handleCitiesChange,
-						value: this.state.filterCity },
-					_react2.default.createElement(
-						'option',
-						{ value: this.state.allEventCities, key: '0' },
-						'wszystkie'
-					),
-					';',
-					allSelectCitiesOptions
-				);
-				// *****  END CITY SELECT FIELD ***** 
-
-
 				return _react2.default.createElement(
 					'div',
 					{ className: 'homepage' },
@@ -9926,7 +9940,7 @@ document.addEventListener('DOMContentLoaded', function () {
 							{ className: 'selectLabel' },
 							this.state.description[2]
 						),
-						selectTypeField
+						this.createSelectField(this.state.allEventTypesArray, "filterType", this.state.filterType, this.state.allEventTypes)
 					),
 					_react2.default.createElement(
 						'div',
@@ -9936,7 +9950,27 @@ document.addEventListener('DOMContentLoaded', function () {
 							{ className: 'selectLabel' },
 							this.state.description[3]
 						),
-						selectCityField
+						this.createSelectField(this.state.allEventCitiesArray, "filterCity", this.state.filterCity, this.state.allEventCities)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'selectContainer' },
+						_react2.default.createElement(
+							'p',
+							{ className: 'selectLabel' },
+							this.state.description[4]
+						),
+						this.createSelectField(this.state.allLicenceTypesArray, "filterLicence", this.state.filterLicence, this.state.allLicenceTypes)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'selectContainer' },
+						_react2.default.createElement(
+							'p',
+							{ className: 'selectLabel' },
+							this.state.description[5]
+						),
+						this.createSelectField(this.state.allHomologationTypesArray, "filterHomologation", this.state.filterHomologation, this.state.allHomologationTypes)
 					),
 					_react2.default.createElement(
 						'p',
