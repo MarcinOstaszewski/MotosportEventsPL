@@ -5,33 +5,90 @@
 body {
     font-family: sans-serif;
     font-size: 12px;
-    
 }
+.container {
+    margin: 0 auto;
+    width: 1000px;
+}
+    
 .homepage  {
-    margin: 20px 50px;
-    .selectLabel {
-        margin: 5px 10px 5px 0;
+    width: 100%;
+    .header {
+        min-height: 60px;
+        background-color: #1e2121;
+        .container {
+            margin: 0 auto;
+            width: 1000px;
+            .mainTitle {
+                color: #fff;
+                font-size: 24px;
+                padding: 15px 0;
+            }
+        }
     }
-    .tableTitle {
-        font-size: 18px;
+    .menuBar {
+        height: 30px;
+        background-color: #ff4705;
+        display: flex;
+        align-items: center;
+        .menuList {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .menuItem {
+                align-self: center;
+                align-content: center;
+                color: #fff;
+            }
+        }
+
+    }
+    .selectRowDescription {
+        font-size: 15px;
+        color: #1e2121;
+        padding: 10px 0 5px 0;
+    }
+    .selectRow {
+        display: flex;
+        flex-direction: row;
+        padding-top: 10px;
+        .selectContainer {
+            padding: 5px;
+            width: 140px;
+            .selectLabel {
+                font-size: 10px;
+                color: #ff4705;
+            }
+            .select {
+                font-size: 12px;
+                padding: 5px 0px;
+                margin: 5px 0px;
+                width: 120px;
+            }
+        }
+        
+    }
+    .tableR {
+        font-size: 15px;
         color: rgb(10, 50, 110);
         padding: 10px 0px;
     }
 }
-h1 {
-    font-size: 20px;
-}
-.select {
-    font-size: 15px;
-    padding: 5px 0px;
-    margin: 5px 0px;
-    
-}
-
 
 .eventTable {
     border: 3px solid rgb(10, 50, 110);
-    thead, tbody {
+    width: 100%;
+	.eventTableHead {
+        background-color: rgb(60, 118, 156);
+       .eventTableHeadRow {
+            th {
+                padding: 10px;
+                color: #fff;
+                border: 1px solid rgb(94, 160, 204);
+            }
+       }
+    }
+    .eventTableBody {
         tr {
             border-bottom: 2px solid rgb(11, 112, 179);
             td {
@@ -39,14 +96,9 @@ h1 {
                 border: 1px solid rgb(16, 112, 177);
                 text-align: center;
             }
-            th {
-                padding: 10px;
-                color: #fff;
-                border: 1px solid rgb(94, 160, 204);
-            }
         }
-    }
-    thead {
-        background-color: rgb(60, 118, 156);
+        tr:nth-child(even) {
+            background: #f5f5f5;
+        }
     }
 }
