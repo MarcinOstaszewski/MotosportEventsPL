@@ -241,72 +241,89 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			return (
 				<div className="homepage">
-					<h1>PRZEGLĄDARKA WYDARZEŃ MOTOSPORTOWYCH - test</h1>
-					<p>kryteria selekcji wydarzeń:</p> 
-
-					
-					{/* <div className="selectContainer">
-						<p className="selectLabel">{  this.state.description[2]  }</p>
-						{  selectTypeField  }
-					</div> */}
-
-					{/* TU DODAJĘ SELECT Z TYPAMI */}
-					<div className="selectContainer">
-						<p className="selectLabel">{  this.state.description[2]  }</p>
-						{this.createSelectField( 
-							this.state.allEventTypesArray, 
-							"filterType", 
-							this.state.filterType, 
-							this.state.allEventTypes)
-						}
+					<div className="header">
+						<div className="container">
+							<h1 className="mainTitle">PRZEGLĄDARKA WYDARZEŃ MOTOSPORTOWYCH</h1>
+						</div>
+					</div>
+					<div className="menuBar">
+						<div className="container">
+							<ul className="menuList">
+								<li className="menuItem">TEST</li>
+								<li className="menuItem">TEST</li>
+								<li className="menuItem">TEST</li>
+								<li className="menuItem">TEST</li>
+								<li className="menuItem">TEST</li>
+								<li className="menuItem">TEST</li>
+								<li className="menuItem">TEST</li>							
+							</ul>
+						</div>
 					</div>
 
-					<div className="selectContainer">
-						<p className="selectLabel">{  this.state.description[3]  }</p>
-						{this.createSelectField( 
-							this.state.allEventCitiesArray, 
-							"filterCity", 
-							this.state.filterCity, 
-							this.state.allEventCities)
-						}
-					</div>
 
-					<div className="selectContainer">
-						<p className="selectLabel">{  this.state.description[4]  }</p>
-						{this.createSelectField( 
-							this.state.allLicenceTypesArray, 
-							"filterLicence", 
-							this.state.filterLicence, 
-							this.state.allLicenceTypes)
-						}
-					</div>
+					<div className="container">
+						<p className="selectRowDescription">kryteria selekcji wydarzeń:</p> 
+						<div className="selectRow">
+							<div className="selectContainer">
+								<p className="selectLabel">{  this.state.description[2]  }</p>
+								{this.createSelectField( 
+									this.state.allEventTypesArray, 
+									"filterType", 
+									this.state.filterType, 
+									this.state.allEventTypes)
+								}
+							</div>
 
-					<div className="selectContainer">
-						<p className="selectLabel">{  this.state.description[5]  }</p>
-						{this.createSelectField( 
-							this.state.allHomologationTypesArray, 
-							"filterHomologation", 
-							this.state.filterHomologation, 
-							this.state.allHomologationTypes)  
-						}
-					</div>
+							<div className="selectContainer">
+								<p className="selectLabel">{  this.state.description[3]  }</p>
+								{this.createSelectField( 
+									this.state.allEventCitiesArray, 
+									"filterCity", 
+									this.state.filterCity, 
+									this.state.allEventCities)
+								}
+							</div>
 
-					<p className="tableTitle">Wydarzenia spełniające kryteria:</p>
-					<table className="eventTable">
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th><strong>{  this.state.description[1]  }</strong></th>
-								<th><em>{  this.state.description[2]  }</em></th>
-								<th><strong>{  this.state.description[3]  }</strong></th>
-								<th>{  this.state.description[4]  }</th>
-								<th>{  this.state.description[5]  }</th>
-							</tr>
-						</thead>
-						<tbody >
-							{listOfFilteredEvents}
-						</tbody>
-					</table>
+							<div className="selectContainer">
+								<p className="selectLabel">{  this.state.description[4]  }</p>
+								{this.createSelectField( 
+									this.state.allLicenceTypesArray, 
+									"filterLicence", 
+									this.state.filterLicence, 
+									this.state.allLicenceTypes)
+								}
+							</div>
+
+							<div className="selectContainer">
+								<p className="selectLabel">{  this.state.description[5]  }</p>
+								{this.createSelectField( 
+									this.state.allHomologationTypesArray, 
+									"filterHomologation", 
+									this.state.filterHomologation, 
+									this.state.allHomologationTypes)  
+								}
+							</div>
+						</div>
+					</div>
+						
+					<div className="container">
+						<p className="tableTitle">Wydarzenia spełniające kryteria:</p>
+						<table className="eventTable">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th><strong>{  this.state.description[1]  }</strong></th>
+									<th><em>{  this.state.description[2]  }</em></th>
+									<th><strong>{  this.state.description[3]  }</strong></th>
+									<th>{  this.state.description[4]  }</th>
+									<th>{  this.state.description[5]  }</th>
+								</tr>
+							</thead>
+							<tbody >
+								{listOfFilteredEvents}
+							</tbody>
+						</table>
+					</div>
 
 				</div>
 			)
