@@ -183,51 +183,11 @@ document.addEventListener('DOMContentLoaded', function () {
 				}
 			});
 
-
-			// ***********  CREATES TYPE SELECT FIELD ***********
-			// creates a list of all options for the <select> field
-			let allSelectTypeOptions = this.state.allEventTypesArray.map( (item, index) => {
-				return <option value={  item  } key={  index+1  }>{  item  }</option>;
-			});
-
-			// creates the full TYPES <select> field
-			let selectTypeField = (
-				<select
-					className="select"
-					name = "filterType"
-					onChange={  this.handleChange  }
-					value={  this.state.filterType  }>
-					<option value={ this.state.allEventTypes } key="0">wszystkie</option>
-					{  allSelectTypeOptions  }
-				</select>
-			);
-			// ***********  END TYPE SELECT FIELD *********** 
-
-		
-
-			// *****  CREATES CITY SELECT FIELD *****
-			// creates a list of all options for the <select> field
-			let allSelectCitiesOptions = this.state.allEventCitiesArray.map( function(item,index) {
-				return <option value={  item  } key={  index + 1  }>{  item  }</option>;
-			});
-
-			// creates the full CITIES <select> field
-			let selectCityField = (<select
-					className="select"
-					name = "filterCity"
-					onChange={  this.handleChange  }
-					value={  this.state.filterCity  }>
-					<option value={ this.state.allEventCities } key="0">wszystkie</option>
-					{  allSelectCitiesOptions  }
-					</select>
-			);
-			// *****  END CITY SELECT FIELD ***** 
-
 			// CREATES TABLE WITH EVENTS
-			// maps filtered events into a table row
+			// maps each item in filteredEvents into a table row
 			listOfFilteredEvents = listOfFilteredEvents.map( item => {
 				return (
-					<tr key={  item[0]  }>
+					<tr key={  item[0]  } className="tableRow">
 						<td>{  item[0]  }</td>
 						<td><strong>{  item[1]  }</strong></td>
 						<td><em>{  item[2]  }</em></td>
@@ -249,20 +209,20 @@ document.addEventListener('DOMContentLoaded', function () {
 					<div className="menuBar">
 						<div className="container">
 							<ul className="menuList">
-								<li className="menuItem">TEST</li>
-								<li className="menuItem">TEST</li>
-								<li className="menuItem">TEST</li>
-								<li className="menuItem">TEST</li>
-								<li className="menuItem">TEST</li>
-								<li className="menuItem">TEST</li>
-								<li className="menuItem">TEST</li>							
+								<li className="menuItem">MENU 1</li>
+								<li className="menuItem">MENU 2</li>
+								<li className="menuItem">MENU 3</li>
+								<li className="menuItem">MENU 4</li>
+								<li className="menuItem">MENU 5</li>
+								<li className="menuItem">MENU 6</li>
+								<li className="menuItem">MENU 7</li>							
 							</ul>
 						</div>
 					</div>
 
 
 					<div className="container">
-						<p className="selectRowDescription">kryteria selekcji wydarzeń:</p> 
+						{/* <p className="selectRowDescription">kryteria selekcji wydarzeń:</p>  */}
 						<div className="selectRow">
 							<div className="selectContainer">
 								<p className="selectLabel">{  this.state.description[2]  }</p>
@@ -307,10 +267,10 @@ document.addEventListener('DOMContentLoaded', function () {
 					</div>
 						
 					<div className="container">
-						<p className="tableTitle">Wydarzenia spełniające kryteria:</p>
+						{/* <p className="tableTitle">Wydarzenia spełniające kryteria:</p> */}
 						<table className="eventTable">
-							<thead>
-								<tr>
+							<thead className="eventTableHead">
+								<tr className="eventTableHeadRow">
 									<th>ID</th>
 									<th><strong>{  this.state.description[1]  }</strong></th>
 									<th><em>{  this.state.description[2]  }</em></th>
@@ -319,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
 									<th>{  this.state.description[5]  }</th>
 								</tr>
 							</thead>
-							<tbody >
+							<tbody className="eventTableBody">
 								{listOfFilteredEvents}
 							</tbody>
 						</table>
