@@ -9813,67 +9813,12 @@ document.addEventListener('DOMContentLoaded', function () {
 					}
 				});
 
-				// ***********  CREATES TYPE SELECT FIELD ***********
-				// creates a list of all options for the <select> field
-				var allSelectTypeOptions = this.state.allEventTypesArray.map(function (item, index) {
-					return _react2.default.createElement(
-						'option',
-						{ value: item, key: index + 1 },
-						item
-					);
-				});
-
-				// creates the full TYPES <select> field
-				var selectTypeField = _react2.default.createElement(
-					'select',
-					{
-						className: 'select',
-						name: 'filterType',
-						onChange: this.handleChange,
-						value: this.state.filterType },
-					_react2.default.createElement(
-						'option',
-						{ value: this.state.allEventTypes, key: '0' },
-						'wszystkie'
-					),
-					allSelectTypeOptions
-				);
-				// ***********  END TYPE SELECT FIELD *********** 
-
-
-				// *****  CREATES CITY SELECT FIELD *****
-				// creates a list of all options for the <select> field
-				var allSelectCitiesOptions = this.state.allEventCitiesArray.map(function (item, index) {
-					return _react2.default.createElement(
-						'option',
-						{ value: item, key: index + 1 },
-						item
-					);
-				});
-
-				// creates the full CITIES <select> field
-				var selectCityField = _react2.default.createElement(
-					'select',
-					{
-						className: 'select',
-						name: 'filterCity',
-						onChange: this.handleChange,
-						value: this.state.filterCity },
-					_react2.default.createElement(
-						'option',
-						{ value: this.state.allEventCities, key: '0' },
-						'wszystkie'
-					),
-					allSelectCitiesOptions
-				);
-				// *****  END CITY SELECT FIELD ***** 
-
 				// CREATES TABLE WITH EVENTS
-				// maps filtered events into a table row
+				// maps each item in filteredEvents into a table row
 				listOfFilteredEvents = listOfFilteredEvents.map(function (item) {
 					return _react2.default.createElement(
 						'tr',
-						{ key: item[0] },
+						{ key: item[0], className: 'tableRow' },
 						_react2.default.createElement(
 							'td',
 							null,
@@ -9923,117 +9868,174 @@ document.addEventListener('DOMContentLoaded', function () {
 					'div',
 					{ className: 'homepage' },
 					_react2.default.createElement(
-						'h1',
-						null,
-						'PRZEGL\u0104DARKA WYDARZE\u0143 MOTOSPORTOWYCH - test'
-					),
-					_react2.default.createElement(
-						'p',
-						null,
-						'kryteria selekcji wydarze\u0144:'
-					),
-					_react2.default.createElement(
 						'div',
-						{ className: 'selectContainer' },
+						{ className: 'header' },
 						_react2.default.createElement(
-							'p',
-							{ className: 'selectLabel' },
-							this.state.description[2]
-						),
-						this.createSelectField(this.state.allEventTypesArray, "filterType", this.state.filterType, this.state.allEventTypes)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'selectContainer' },
-						_react2.default.createElement(
-							'p',
-							{ className: 'selectLabel' },
-							this.state.description[3]
-						),
-						this.createSelectField(this.state.allEventCitiesArray, "filterCity", this.state.filterCity, this.state.allEventCities)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'selectContainer' },
-						_react2.default.createElement(
-							'p',
-							{ className: 'selectLabel' },
-							this.state.description[4]
-						),
-						this.createSelectField(this.state.allLicenceTypesArray, "filterLicence", this.state.filterLicence, this.state.allLicenceTypes)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'selectContainer' },
-						_react2.default.createElement(
-							'p',
-							{ className: 'selectLabel' },
-							this.state.description[5]
-						),
-						this.createSelectField(this.state.allHomologationTypesArray, "filterHomologation", this.state.filterHomologation, this.state.allHomologationTypes)
-					),
-					_react2.default.createElement(
-						'p',
-						{ className: 'tableTitle' },
-						'Wydarzenia spe\u0142niaj\u0105ce kryteria:'
-					),
-					_react2.default.createElement(
-						'table',
-						{ className: 'eventTable' },
-						_react2.default.createElement(
-							'thead',
-							null,
+							'div',
+							{ className: 'container' },
 							_react2.default.createElement(
-								'tr',
-								null,
+								'h1',
+								{ className: 'mainTitle' },
+								'PRZEGL\u0104DARKA WYDARZE\u0143 MOTOSPORTOWYCH'
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'menuBar' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'container' },
+							_react2.default.createElement(
+								'ul',
+								{ className: 'menuList' },
 								_react2.default.createElement(
-									'th',
-									null,
-									'ID'
+									'li',
+									{ className: 'menuItem' },
+									'MENU 1'
 								),
 								_react2.default.createElement(
-									'th',
-									null,
-									_react2.default.createElement(
-										'strong',
-										null,
-										this.state.description[1]
-									)
+									'li',
+									{ className: 'menuItem' },
+									'MENU 2'
 								),
 								_react2.default.createElement(
-									'th',
-									null,
-									_react2.default.createElement(
-										'em',
-										null,
-										this.state.description[2]
-									)
+									'li',
+									{ className: 'menuItem' },
+									'MENU 3'
 								),
 								_react2.default.createElement(
-									'th',
-									null,
-									_react2.default.createElement(
-										'strong',
-										null,
-										this.state.description[3]
-									)
+									'li',
+									{ className: 'menuItem' },
+									'MENU 4'
 								),
 								_react2.default.createElement(
-									'th',
-									null,
-									this.state.description[4]
+									'li',
+									{ className: 'menuItem' },
+									'MENU 5'
 								),
 								_react2.default.createElement(
-									'th',
-									null,
-									this.state.description[5]
+									'li',
+									{ className: 'menuItem' },
+									'MENU 6'
+								),
+								_react2.default.createElement(
+									'li',
+									{ className: 'menuItem' },
+									'MENU 7'
 								)
 							)
-						),
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'container' },
 						_react2.default.createElement(
-							'tbody',
-							null,
-							listOfFilteredEvents
+							'div',
+							{ className: 'selectRow' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'selectContainer' },
+								_react2.default.createElement(
+									'p',
+									{ className: 'selectLabel' },
+									this.state.description[2]
+								),
+								this.createSelectField(this.state.allEventTypesArray, "filterType", this.state.filterType, this.state.allEventTypes)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'selectContainer' },
+								_react2.default.createElement(
+									'p',
+									{ className: 'selectLabel' },
+									this.state.description[3]
+								),
+								this.createSelectField(this.state.allEventCitiesArray, "filterCity", this.state.filterCity, this.state.allEventCities)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'selectContainer' },
+								_react2.default.createElement(
+									'p',
+									{ className: 'selectLabel' },
+									this.state.description[4]
+								),
+								this.createSelectField(this.state.allLicenceTypesArray, "filterLicence", this.state.filterLicence, this.state.allLicenceTypes)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'selectContainer' },
+								_react2.default.createElement(
+									'p',
+									{ className: 'selectLabel' },
+									this.state.description[5]
+								),
+								this.createSelectField(this.state.allHomologationTypesArray, "filterHomologation", this.state.filterHomologation, this.state.allHomologationTypes)
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'container' },
+						_react2.default.createElement(
+							'table',
+							{ className: 'eventTable' },
+							_react2.default.createElement(
+								'thead',
+								{ className: 'eventTableHead' },
+								_react2.default.createElement(
+									'tr',
+									{ className: 'eventTableHeadRow' },
+									_react2.default.createElement(
+										'th',
+										null,
+										'ID'
+									),
+									_react2.default.createElement(
+										'th',
+										null,
+										_react2.default.createElement(
+											'strong',
+											null,
+											this.state.description[1]
+										)
+									),
+									_react2.default.createElement(
+										'th',
+										null,
+										_react2.default.createElement(
+											'em',
+											null,
+											this.state.description[2]
+										)
+									),
+									_react2.default.createElement(
+										'th',
+										null,
+										_react2.default.createElement(
+											'strong',
+											null,
+											this.state.description[3]
+										)
+									),
+									_react2.default.createElement(
+										'th',
+										null,
+										this.state.description[4]
+									),
+									_react2.default.createElement(
+										'th',
+										null,
+										this.state.description[5]
+									)
+								)
+							),
+							_react2.default.createElement(
+								'tbody',
+								{ className: 'eventTableBody' },
+								listOfFilteredEvents
+							)
 						)
 					)
 				);
@@ -22582,7 +22584,7 @@ exports = module.exports = __webpack_require__(186)(false);
 
 
 // module
-exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \r\n   v2.0 | 20110126\r\n   License: none (public domain)\r\n*/\nhtml,\nbody,\ndiv,\nspan,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\np,\nblockquote,\npre,\na,\nem,\nimg,\nins,\nb,\nu,\ni,\ncenter,\ndl,\ndt,\ndd,\nol,\nul,\nli,\nfieldset,\nform,\nlabel,\ntable,\ntbody,\ntfoot,\nthead,\ntr,\nth,\ntd,\narticle,\naside,\nfigure,\nfigcaption,\nfooter,\nheader,\nmenu,\nnav,\nsection,\nsummary {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\nsection {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol,\nul {\n  list-style: none; }\n\nblockquote,\nq {\n  quotes: none; }\n\nblockquote:before,\nblockquote:after,\nq:before,\nq:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n* {\n  box-sizing: border-box; }\n\nbody {\n  font-family: sans-serif;\n  font-size: 12px; }\n\n.homepage {\n  margin: 20px 50px; }\n  .homepage .selectLabel {\n    margin: 5px 10px 5px 0; }\n  .homepage .tableTitle {\n    font-size: 18px;\n    color: #0a326e;\n    padding: 10px 0px; }\n\nh1 {\n  font-size: 20px; }\n\n.select {\n  font-size: 15px;\n  padding: 5px 0px;\n  margin: 5px 0px; }\n\n.eventTable {\n  border: 3px solid #0a326e; }\n  .eventTable thead tr, .eventTable tbody tr {\n    border-bottom: 2px solid #0b70b3; }\n    .eventTable thead tr td, .eventTable tbody tr td {\n      padding: 8px 5px;\n      border: 1px solid #1070b1;\n      text-align: center; }\n    .eventTable thead tr th, .eventTable tbody tr th {\n      padding: 10px;\n      color: #fff;\n      border: 1px solid #5ea0cc; }\n  .eventTable thead {\n    background-color: #3c769c; }\n", ""]);
+exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \r\n   v2.0 | 20110126\r\n   License: none (public domain)\r\n*/\nhtml,\nbody,\ndiv,\nspan,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\np,\nblockquote,\npre,\na,\nem,\nimg,\nins,\nb,\nu,\ni,\ncenter,\ndl,\ndt,\ndd,\nol,\nul,\nli,\nfieldset,\nform,\nlabel,\ntable,\ntbody,\ntfoot,\nthead,\ntr,\nth,\ntd,\narticle,\naside,\nfigure,\nfigcaption,\nfooter,\nheader,\nmenu,\nnav,\nsection,\nsummary {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\nsection {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol,\nul {\n  list-style: none; }\n\nblockquote,\nq {\n  quotes: none; }\n\nblockquote:before,\nblockquote:after,\nq:before,\nq:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n* {\n  box-sizing: border-box; }\n\nbody {\n  font-family: sans-serif;\n  font-size: 12px; }\n\n.container {\n  margin: 0 auto;\n  width: 1000px; }\n\n.homepage {\n  width: 100%; }\n  .homepage .header {\n    min-height: 60px;\n    background-color: #1e2121; }\n    .homepage .header .container {\n      margin: 0 auto;\n      width: 1000px; }\n      .homepage .header .container .mainTitle {\n        color: #fff;\n        font-size: 24px;\n        padding: 15px 0; }\n  .homepage .menuBar {\n    height: 30px;\n    background-color: #ff4705;\n    display: flex;\n    align-items: center; }\n    .homepage .menuBar .menuList {\n      display: flex;\n      flex-direction: row;\n      justify-content: space-between; }\n      .homepage .menuBar .menuList .menuItem {\n        align-self: center;\n        align-content: center;\n        color: #fff; }\n  .homepage .selectRowDescription {\n    font-size: 15px;\n    color: #1e2121;\n    padding: 10px 0 5px 0; }\n  .homepage .selectRow {\n    display: flex;\n    flex-direction: row;\n    padding-top: 10px; }\n    .homepage .selectRow .selectContainer {\n      padding: 5px;\n      width: 140px; }\n      .homepage .selectRow .selectContainer .selectLabel {\n        font-size: 10px;\n        color: #ff4705; }\n      .homepage .selectRow .selectContainer .select {\n        font-size: 12px;\n        padding: 5px 0px;\n        margin: 5px 0px;\n        width: 120px; }\n  .homepage .tableR {\n    font-size: 15px;\n    color: #0a326e;\n    padding: 10px 0px; }\n\n.eventTable {\n  border: 3px solid #0a326e;\n  width: 100%; }\n  .eventTable .eventTableHead {\n    background-color: #3c769c; }\n    .eventTable .eventTableHead .eventTableHeadRow th {\n      padding: 10px;\n      color: #fff;\n      border: 1px solid #5ea0cc; }\n  .eventTable .eventTableBody tr {\n    border-bottom: 2px solid #0b70b3; }\n    .eventTable .eventTableBody tr td {\n      padding: 8px 5px;\n      border: 1px solid #1070b1;\n      text-align: center; }\n  .eventTable .eventTableBody tr:nth-child(even) {\n    background: #f5f5f5; }\n", ""]);
 
 // exports
 
