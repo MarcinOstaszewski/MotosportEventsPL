@@ -185,15 +185,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			// CREATES TABLE WITH EVENTS
 			// maps each item in filteredEvents into a table row
-			listOfFilteredEvents = listOfFilteredEvents.map( item => {
+			let MapOfFilteredEvents = listOfFilteredEvents.map( item => {
 				return (
 					<tr key={  item[0]  } className="tableRow">
-						<td>{  item[0]  }</td>
-						<td><strong>{  item[1]  }</strong></td>
-						<td><em>{  item[2]  }</em></td>
-						<td><strong>{  item[3]  }</strong></td>
-						<td>{  item[4]  }</td>
-						<td>{  item[5]  }</td>
+						<td className="eventID">{  item[0]  }</td>
+						<td className="eventName">{  item[1]  }</td>
+						<td className="eventType">{  item[2]  }</td>
+						<td className="eventCity">{  item[3]  }</td>
+						<td className="eventLicence">{  item[4]  }</td>
+						<td className="eventHomologation">{  item[5]  }</td>
 					</tr>
 				);
 			})
@@ -222,7 +222,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 					<div className="container">
-						{/* <p className="selectRowDescription">kryteria selekcji wydarzeń:</p>  */}
 						<div className="selectRow">
 							<div className="selectContainer">
 								<p className="selectLabel">{  this.state.description[2]  }</p>
@@ -267,7 +266,6 @@ document.addEventListener('DOMContentLoaded', function () {
 					</div>
 						
 					<div className="container">
-						{/* <p className="tableTitle">Wydarzenia spełniające kryteria:</p> */}
 						<table className="eventTable">
 							<thead className="eventTableHead">
 								<tr className="eventTableHeadRow">
@@ -280,8 +278,14 @@ document.addEventListener('DOMContentLoaded', function () {
 								</tr>
 							</thead>
 							<tbody className="eventTableBody">
-								{listOfFilteredEvents}
+								{MapOfFilteredEvents}
 							</tbody>
+							<tfoot className="eventTableFooter">
+								<tr className="lastTableRow">
+									<td colSpan="6" className="lastTableRowCell">{ listOfFilteredEvents.length>0 ? "Koniec listy wydarzeń" : "Brak wydarzeń spełniających kryteria" }</td>
+									{/* <td></td><td></td><td></td><td></td><td></td> */}
+								</tr>
+							</tfoot>
 						</table>
 					</div>
 
