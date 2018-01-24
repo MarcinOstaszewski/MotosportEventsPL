@@ -9708,7 +9708,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				);
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ className: 'selectContainer' },
 					selectString
 				);
 			};
@@ -9815,50 +9815,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
 				// CREATES TABLE WITH EVENTS
 				// maps each item in filteredEvents into a table row
-				listOfFilteredEvents = listOfFilteredEvents.map(function (item) {
+				var MapOfFilteredEvents = listOfFilteredEvents.map(function (item) {
 					return _react2.default.createElement(
 						'tr',
 						{ key: item[0], className: 'tableRow' },
 						_react2.default.createElement(
 							'td',
-							null,
+							{ className: 'eventID' },
 							item[0]
 						),
 						_react2.default.createElement(
 							'td',
-							null,
-							_react2.default.createElement(
-								'strong',
-								null,
-								item[1]
-							)
+							{ className: 'eventName' },
+							item[1]
 						),
 						_react2.default.createElement(
 							'td',
-							null,
-							_react2.default.createElement(
-								'em',
-								null,
-								item[2]
-							)
+							{ className: 'eventType' },
+							item[2]
 						),
 						_react2.default.createElement(
 							'td',
-							null,
-							_react2.default.createElement(
-								'strong',
-								null,
-								item[3]
-							)
+							{ className: 'eventCity' },
+							item[3]
 						),
 						_react2.default.createElement(
 							'td',
-							null,
+							{ className: 'eventLicence' },
 							item[4]
 						),
 						_react2.default.createElement(
 							'td',
-							null,
+							{ className: 'eventHomologation' },
 							item[5]
 						)
 					);
@@ -9930,50 +9918,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					_react2.default.createElement(
 						'div',
 						{ className: 'container' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'selectRow' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'selectContainer' },
-								_react2.default.createElement(
-									'p',
-									{ className: 'selectLabel' },
-									this.state.description[2]
-								),
-								this.createSelectField(this.state.allEventTypesArray, "filterType", this.state.filterType, this.state.allEventTypes)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'selectContainer' },
-								_react2.default.createElement(
-									'p',
-									{ className: 'selectLabel' },
-									this.state.description[3]
-								),
-								this.createSelectField(this.state.allEventCitiesArray, "filterCity", this.state.filterCity, this.state.allEventCities)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'selectContainer' },
-								_react2.default.createElement(
-									'p',
-									{ className: 'selectLabel' },
-									this.state.description[4]
-								),
-								this.createSelectField(this.state.allLicenceTypesArray, "filterLicence", this.state.filterLicence, this.state.allLicenceTypes)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'selectContainer' },
-								_react2.default.createElement(
-									'p',
-									{ className: 'selectLabel' },
-									this.state.description[5]
-								),
-								this.createSelectField(this.state.allHomologationTypesArray, "filterHomologation", this.state.filterHomologation, this.state.allHomologationTypes)
-							)
-						)
+						_react2.default.createElement('div', { className: 'selectRow' })
 					),
 					_react2.default.createElement(
 						'div',
@@ -9995,46 +9940,51 @@ document.addEventListener('DOMContentLoaded', function () {
 									_react2.default.createElement(
 										'th',
 										null,
-										_react2.default.createElement(
-											'strong',
-											null,
-											this.state.description[1]
-										)
+										this.state.description[1]
 									),
 									_react2.default.createElement(
 										'th',
 										null,
-										_react2.default.createElement(
-											'em',
-											null,
-											this.state.description[2]
-										)
+										this.state.description[2],
+										this.createSelectField(this.state.allEventTypesArray, "filterType", this.state.filterType, this.state.allEventTypes)
 									),
 									_react2.default.createElement(
 										'th',
 										null,
-										_react2.default.createElement(
-											'strong',
-											null,
-											this.state.description[3]
-										)
+										this.state.description[3],
+										this.createSelectField(this.state.allEventCitiesArray, "filterCity", this.state.filterCity, this.state.allEventCities)
 									),
 									_react2.default.createElement(
 										'th',
 										null,
-										this.state.description[4]
+										this.state.description[4],
+										this.createSelectField(this.state.allLicenceTypesArray, "filterLicence", this.state.filterLicence, this.state.allLicenceTypes)
 									),
 									_react2.default.createElement(
 										'th',
 										null,
-										this.state.description[5]
+										this.state.description[5],
+										this.createSelectField(this.state.allHomologationTypesArray, "filterHomologation", this.state.filterHomologation, this.state.allHomologationTypes)
 									)
 								)
 							),
 							_react2.default.createElement(
 								'tbody',
 								{ className: 'eventTableBody' },
-								listOfFilteredEvents
+								MapOfFilteredEvents
+							),
+							_react2.default.createElement(
+								'tfoot',
+								{ className: 'eventTableFooter' },
+								_react2.default.createElement(
+									'tr',
+									{ className: 'lastTableRow' },
+									_react2.default.createElement(
+										'td',
+										{ colSpan: '6', className: 'lastTableRowCell' },
+										listOfFilteredEvents.length > 0 ? "Koniec listy wydarzeń" : "Brak wydarzeń spełniających kryteria"
+									)
+								)
 							)
 						)
 					)
@@ -22584,7 +22534,7 @@ exports = module.exports = __webpack_require__(186)(false);
 
 
 // module
-exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \r\n   v2.0 | 20110126\r\n   License: none (public domain)\r\n*/\nhtml,\nbody,\ndiv,\nspan,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\np,\nblockquote,\npre,\na,\nem,\nimg,\nins,\nb,\nu,\ni,\ncenter,\ndl,\ndt,\ndd,\nol,\nul,\nli,\nfieldset,\nform,\nlabel,\ntable,\ntbody,\ntfoot,\nthead,\ntr,\nth,\ntd,\narticle,\naside,\nfigure,\nfigcaption,\nfooter,\nheader,\nmenu,\nnav,\nsection,\nsummary {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\nsection {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol,\nul {\n  list-style: none; }\n\nblockquote,\nq {\n  quotes: none; }\n\nblockquote:before,\nblockquote:after,\nq:before,\nq:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n* {\n  box-sizing: border-box; }\n\nbody {\n  font-family: sans-serif;\n  font-size: 12px; }\n\n.container {\n  margin: 0 auto;\n  width: 1000px; }\n\n.homepage {\n  width: 100%; }\n  .homepage .header {\n    min-height: 60px;\n    background-color: #1e2121; }\n    .homepage .header .container {\n      margin: 0 auto;\n      width: 1000px; }\n      .homepage .header .container .mainTitle {\n        color: #fff;\n        font-size: 24px;\n        padding: 15px 0; }\n  .homepage .menuBar {\n    height: 30px;\n    background-color: #ff4705;\n    display: flex;\n    align-items: center; }\n    .homepage .menuBar .menuList {\n      display: flex;\n      flex-direction: row;\n      justify-content: space-between; }\n      .homepage .menuBar .menuList .menuItem {\n        align-self: center;\n        align-content: center;\n        color: #fff; }\n  .homepage .selectRowDescription {\n    font-size: 15px;\n    color: #1e2121;\n    padding: 10px 0 5px 0; }\n  .homepage .selectRow {\n    display: flex;\n    flex-direction: row;\n    padding-top: 10px; }\n    .homepage .selectRow .selectContainer {\n      padding: 5px;\n      width: 140px; }\n      .homepage .selectRow .selectContainer .selectLabel {\n        font-size: 10px;\n        color: #ff4705; }\n      .homepage .selectRow .selectContainer .select {\n        font-size: 12px;\n        padding: 5px 0px;\n        margin: 5px 0px;\n        width: 120px; }\n  .homepage .tableR {\n    font-size: 15px;\n    color: #0a326e;\n    padding: 10px 0px; }\n\n.eventTable {\n  border: 3px solid #0a326e;\n  width: 100%; }\n  .eventTable .eventTableHead {\n    background-color: #3c769c; }\n    .eventTable .eventTableHead .eventTableHeadRow th {\n      padding: 10px;\n      color: #fff;\n      border: 1px solid #5ea0cc; }\n  .eventTable .eventTableBody tr {\n    border-bottom: 2px solid #0b70b3; }\n    .eventTable .eventTableBody tr td {\n      padding: 8px 5px;\n      border: 1px solid #1070b1;\n      text-align: center; }\n  .eventTable .eventTableBody tr:nth-child(even) {\n    background: #f5f5f5; }\n", ""]);
+exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \r\n   v2.0 | 20110126\r\n   License: none (public domain)\r\n*/\nhtml,\nbody,\ndiv,\nspan,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\np,\nblockquote,\npre,\na,\nem,\nimg,\nins,\nb,\nu,\ni,\ncenter,\ndl,\ndt,\ndd,\nol,\nul,\nli,\nfieldset,\nform,\nlabel,\ntable,\ntbody,\ntfoot,\nthead,\ntr,\nth,\ntd,\narticle,\naside,\nfigure,\nfigcaption,\nfooter,\nheader,\nmenu,\nnav,\nsection,\nsummary {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmenu,\nnav,\nsection {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol,\nul {\n  list-style: none; }\n\nblockquote,\nq {\n  quotes: none; }\n\nblockquote:before,\nblockquote:after,\nq:before,\nq:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n* {\n  box-sizing: border-box; }\n\nbody {\n  font-family: sans-serif;\n  font-size: 12px; }\n\n.container {\n  margin: 0 auto;\n  width: 1000px; }\n\n.homepage {\n  width: 100%; }\n  .homepage .header {\n    min-height: 60px;\n    background-color: #1e2121; }\n    .homepage .header .container {\n      margin: 0 auto;\n      width: 1000px; }\n      .homepage .header .container .mainTitle {\n        color: #fff;\n        font-size: 24px;\n        padding: 15px 0; }\n  .homepage .menuBar {\n    height: 30px;\n    background-color: #ff4705;\n    display: flex;\n    align-items: center; }\n    .homepage .menuBar .menuList {\n      display: flex;\n      flex-direction: row;\n      justify-content: left;\n      border-left: 1px solid #fff; }\n      .homepage .menuBar .menuList .menuItem {\n        align-self: center;\n        align-content: center;\n        color: #fff;\n        border-right: 1px solid #fff;\n        padding: 8px 20px;\n        height: 30px; }\n        .homepage .menuBar .menuList .menuItem:hover {\n          background-color: #d13008;\n          font-size: 14px;\n          padding: 7px 16px;\n          transition: all;\n          transition-duration: 0.2s; }\n  .homepage .tableR {\n    font-size: 15px;\n    color: #0a326e;\n    padding: 10px 0px; }\n\n.eventTable {\n  margin-top: 10px;\n  border: 3px solid #0a326e;\n  width: 100%; }\n  .eventTable .eventTableHead {\n    background-color: #3c769c; }\n    .eventTable .eventTableHead .eventTableHeadRow th {\n      padding: 7px;\n      padding-bottom: 3px;\n      color: #fff;\n      border: 1px solid #5ea0cc; }\n      .eventTable .eventTableHead .eventTableHeadRow th .selectContainer {\n        margin-top: 2px; }\n        .eventTable .eventTableHead .eventTableHeadRow th .selectContainer .select {\n          font-size: 12px;\n          padding: 2px 0px;\n          margin: 5px 0px;\n          width: 80px;\n          background-color: #3c769c;\n          color: #fff;\n          border: transparent;\n          border-bottom: 1px solid #fff;\n          border-left: 1px solid #fff; }\n  .eventTable .eventTableBody tr {\n    border-bottom: 2px solid #0b70b3; }\n    .eventTable .eventTableBody tr td {\n      padding: 8px 5px;\n      border: 1px solid #1070b1;\n      text-align: center; }\n    .eventTable .eventTableBody tr .eventID {\n      font-weight: normal; }\n    .eventTable .eventTableBody tr .eventName {\n      font-weight: bold; }\n    .eventTable .eventTableBody tr .eventType {\n      font-style: italic; }\n    .eventTable .eventTableBody tr .eventCity {\n      font-weight: bold;\n      text-transform: uppercase; }\n  .eventTable .eventTableBody tr:nth-child(even) {\n    background: #f5f5f5; }\n  .eventTable .eventTableFooter .lastTableRow {\n    border: 3px solid #0a326e; }\n    .eventTable .eventTableFooter .lastTableRow .lastTableRowCell {\n      padding: 7px;\n      font-size: 14px;\n      font-weight: bold;\n      text-transform: uppercase;\n      text-align: center;\n      color: #b12300; }\n", ""]);
 
 // exports
 

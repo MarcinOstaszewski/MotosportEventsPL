@@ -34,39 +34,25 @@ body {
         .menuList {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: left;
+            border-left: 1px solid #fff;
             .menuItem {
                 align-self: center;
                 align-content: center;
                 color: #fff;
+                border-right: 1px solid #fff;
+                padding: 8px 20px;
+                height: 30px;
+                &:hover {
+                    background-color: #d13008;
+                    font-size: 14px;
+                    padding: 7px 16px;
+                    transition: all;
+                    transition-duration: 0.2s;
+                }
             }
         }
 
-    }
-    .selectRowDescription {
-        font-size: 15px;
-        color: #1e2121;
-        padding: 10px 0 5px 0;
-    }
-    .selectRow {
-        display: flex;
-        flex-direction: row;
-        padding-top: 10px;
-        .selectContainer {
-            margin: 5px 25px 5px 0;
-            // width: 140px;
-            .selectLabel {
-                font-size: 10px;
-                color: #ff4705;
-            }
-            .select {
-                font-size: 12px;
-                padding: 5px 0px;
-                margin: 5px 0px;
-                width: 100px;
-            }
-        }
-        
     }
     .tableR {
         font-size: 15px;
@@ -76,15 +62,31 @@ body {
 }
 
 .eventTable {
+    margin-top: 10px;
     border: 3px solid rgb(10, 50, 110);
     width: 100%;
 	.eventTableHead {
         background-color: rgb(60, 118, 156);
        .eventTableHeadRow {
             th {
-                padding: 10px;
+                padding: 7px;
+                padding-bottom: 3px;
                 color: #fff;
                 border: 1px solid rgb(94, 160, 204);
+                .selectContainer {
+                    margin-top: 2px;
+                    .select {
+                        font-size: 12px;
+                        padding: 2px 0px;
+                        margin: 5px 0px;
+                        width: 80px;
+                        background-color: rgb(60, 118, 156);
+                        color: #fff;
+                        border: transparent;
+                        border-bottom: 1px solid #fff;
+                        border-left: 1px solid #fff;
+                    }
+                }
             }
        }
     }

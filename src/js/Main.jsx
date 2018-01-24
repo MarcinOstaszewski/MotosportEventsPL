@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					{  allOptionsMapped  }
 				</select>);
 			return (
-				<div>
+				<div className="selectContainer">
 					{  selectString  }
 				</div>
 			);
@@ -222,46 +222,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 					<div className="container">
-						<div className="selectRow">
-							<div className="selectContainer">
-								<p className="selectLabel">{  this.state.description[2]  }</p>
-								{this.createSelectField( 
-									this.state.allEventTypesArray, 
-									"filterType", 
-									this.state.filterType, 
-									this.state.allEventTypes)
-								}
-							</div>
+						<div className="selectRow">													
 
-							<div className="selectContainer">
-								<p className="selectLabel">{  this.state.description[3]  }</p>
-								{this.createSelectField( 
-									this.state.allEventCitiesArray, 
-									"filterCity", 
-									this.state.filterCity, 
-									this.state.allEventCities)
-								}
-							</div>
-
-							<div className="selectContainer">
-								<p className="selectLabel">{  this.state.description[4]  }</p>
-								{this.createSelectField( 
-									this.state.allLicenceTypesArray, 
-									"filterLicence", 
-									this.state.filterLicence, 
-									this.state.allLicenceTypes)
-								}
-							</div>
-
-							<div className="selectContainer">
-								<p className="selectLabel">{  this.state.description[5]  }</p>
-								{this.createSelectField( 
-									this.state.allHomologationTypesArray, 
-									"filterHomologation", 
-									this.state.filterHomologation, 
-									this.state.allHomologationTypes)  
-								}
-							</div>
 						</div>
 					</div>
 						
@@ -270,11 +232,47 @@ document.addEventListener('DOMContentLoaded', function () {
 							<thead className="eventTableHead">
 								<tr className="eventTableHeadRow">
 									<th>ID</th>
-									<th><strong>{  this.state.description[1]  }</strong></th>
-									<th><em>{  this.state.description[2]  }</em></th>
-									<th><strong>{  this.state.description[3]  }</strong></th>
-									<th>{  this.state.description[4]  }</th>
-									<th>{  this.state.description[5]  }</th>
+									<th>
+										{  this.state.description[1]  }
+									</th>
+									<th>
+										{  this.state.description[2]  }
+											{this.createSelectField( 
+												this.state.allEventTypesArray, 
+												"filterType", 
+												this.state.filterType, 
+												this.state.allEventTypes)
+											}
+									</th>
+									<th>
+										{  this.state.description[3]  }
+										
+											{this.createSelectField( 
+												this.state.allEventCitiesArray, 
+												"filterCity", 
+												this.state.filterCity, 
+												this.state.allEventCities)
+											}
+
+									</th>
+									<th>
+										{  this.state.description[4]  }
+											{this.createSelectField( 
+												this.state.allLicenceTypesArray, 
+												"filterLicence", 
+												this.state.filterLicence, 
+												this.state.allLicenceTypes)
+											}
+									</th>
+									<th>
+										{  this.state.description[5]  }
+											{this.createSelectField( 
+												this.state.allHomologationTypesArray, 
+												"filterHomologation", 
+												this.state.filterHomologation, 
+												this.state.allHomologationTypes)  
+											}
+									</th>
 								</tr>
 							</thead>
 							<tbody className="eventTableBody">
